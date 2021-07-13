@@ -13,9 +13,12 @@ def hello_world(request):
         new_model.text = temp
         new_model.save()
 
+        data_list = NewModel.objects.all()
         # return render(request, 'accountapp/hello_world.html', context={'text': 'POST METHOD!'})
         # return render(request, 'accountapp/hello_world.html', context={'text': temp})
-        return render(request, 'accountapp/hello_world.html', context={'text': new_model})
+        return render(request, 'accountapp/hello_world.html', context={'data_list': data_list})
 
     else:
-        return render(request, 'accountapp/hello_world.html', context={'text': 'GET METHOD!'})
+        # return render(request, 'accountapp/hello_world.html', context={'text': 'GET METHOD!'})
+        data_list = NewModel.objects.all()
+        return render(request, 'accountapp/hello_world.html', context={'data_list': data_list})
