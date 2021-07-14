@@ -6,7 +6,17 @@
     <div class = "hello_world_header_button">
         <span>nav1_2</span>
         <span>nav2_2</span>
-        <span>nav3_2</span>
-        <span>nav4_2</span>
+        {% if not user.is_authenticated %} <!-- 로그인 되어 있는 아닌지 알 수 있음 -->
+        <span>
+            <a href="{% url 'accountapp:login' %}">Login</a>
+        </span>
+        <span>
+            <a href="{% url 'accountapp:create' %}">SignUp</a>
+        </span>
+        {% else %}
+        <span>
+            <a href="{% url 'accountapp:logout' %}">Logout</a>
+        </span>
+        {% endif %}
     </div>
 </div>
