@@ -23,11 +23,13 @@ def check_integer(func):
 
 @check_integer
 def rect_area(input_h, input_v):
-    print(input_h * input_v)
+    # print(input_h * input_v)
+    return input_h * input_v
 
 @check_integer
 def tri_area(input_h, input_v):
-    print(1/2 * input_h * input_v)
+    # print(1/2 * input_h * input_v)
+    return 1 / 2 * input_h * input_v
 
 r_area = rect_area(3,4)
 print(r_area)
