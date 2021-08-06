@@ -4,7 +4,11 @@
         <h1>Hello_World_2</h1>
     </div>
     <div class = "hello_world_header_button">
-        <span>nav1_2</span>
+        <span>
+            <a href="{% url 'articleapp:list' %}">
+                Articles
+            </a>
+        </span>
         <span>nav2_2</span>
         {% if not user.is_authenticated %} <!-- 로그인 되어 있는 아닌지 알 수 있음 -->
         <span>

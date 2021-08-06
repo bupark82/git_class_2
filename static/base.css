@@ -56,3 +56,12 @@
     width: 25%;
     box-shadow: 0 0 1rem grey;
 }
+
+.pagination_button {
+    display: inline-block;
+    text-decoration: none;
+    color: white;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 25px
+}
