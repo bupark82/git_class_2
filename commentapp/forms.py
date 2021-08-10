@@ -5,5 +5,5 @@ from commentapp.models import Comment
 
 class CommentCreationForm(ModelForm):
     class Meta:
-        mdoel = Comment
+        model = Comment
         fields = ['content']
