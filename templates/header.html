@@ -9,7 +9,11 @@
                 Articles
             </a>
         </span>
-        <span>nav2_2</span>
+        <span>
+            <a href = "{%  url 'projectapp:list' %}">
+                Projects
+            </a>
+        </span>
         {% if not user.is_authenticated %} <!-- 로그인 되어 있는 아닌지 알 수 있음 -->
         <span>
             <a href="{% url 'accountapp:login' %}">Login</a>
