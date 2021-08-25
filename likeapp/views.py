@@ -16,9 +16,6 @@ from likeapp.models import LikeRecord
 @transaction.atomic
 def db_transaction(user, article):
 
-    article.like += 1
-    article.save()
-
     like_record = LikeRecord.objects.filter(user=user,
                                             article=article)
     if like_record.exists():
@@ -27,7 +24,8 @@ def db_transaction(user, article):
     else:
         # 좋아요 반영 O
         LikeRecord(user=user, article=article).save()
-
+    article.like += 1
+    article.save()
 
 
 @method_decorator(login_required, 'get')
