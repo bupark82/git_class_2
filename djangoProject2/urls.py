@@ -1,5 +1,4 @@
-"""djangoProject2 URL Configuration
-
+"""gis_4ban_1 URL Configuration
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.2/topics/http/urls/
 Examples:
@@ -18,7 +17,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+from articleapp.views import ArticleListView
+
 urlpatterns = [
+    path('', ArticleListView.as_view(), name='home'),
+
     path('admin/', admin.site.urls),
     path('accounts/', include('accountapp.urls')),
     path('profiles/', include('profileapp.urls')),
@@ -28,5 +31,6 @@ urlpatterns = [
 
     path('subscribe/', include('subscribeapp.urls')),
     path('likes/', include('likeapp.urls')),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
