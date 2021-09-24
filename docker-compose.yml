@@ -1,0 +1,53 @@
+version: "3.7"
+
+services:
+    project_mycontainer:
+        image: myimageproject:1
+        networks:
+            - project_mynetwork
+        volumes:
+            - type: volume
+              source: myvolume_static
+              target: /home/git_class_2/staticfiles
+            - type: volume
+              source: myvolume_media
+              target : /home/git_class_2/media
+
+    nginx:
+        image: nginx
+        ports:
+        - 80:80
+        networks:
+        - project_mynetwork
+        volumes:
+            - type: volume
+              source: myvolume_static
+              target: /data/static
+            - type: volume
+              source: myvolume_media
+              target: /data/media
+            - type: bind
+              source: /home/ubuntu/nginx.conf
+              target: /etc/nginx/nginx.conf
+
+    mariadb:
+        image: mariadb:10.5
+        environment:
+          - MARIADB_ROOT_PASSWORD=park6126
+          - MARIADB_DATABASE=django
+          - MARIADB_USER=django
+          - MARIADB_PASSWORD=park6126
+
+        networks:
+        - project_mynetwork
+        volumes:
+          - type: volume
+            source: myvolume_mariadb
+            target: /var/lib/mysql
+
+networks:
+    project_mynetwork:
+volumes:
+    myvolume_static:
+    myvolume_media:
+    myvolume_mariadb:
