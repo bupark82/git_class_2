@@ -12,6 +12,8 @@ services:
             - type: volume
               source: myvolume_media
               target : /home/git_class_2/media
+        secrets:
+            - MYSECRET_KEY
 
     nginx:
         image: nginx
@@ -51,3 +53,7 @@ volumes:
     myvolume_static:
     myvolume_media:
     myvolume_mariadb:
+
+secrets:
+  MY_SECRET_KEY:
+    external: true
