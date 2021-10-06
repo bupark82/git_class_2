@@ -1,0 +1,78 @@
+version: "3.7"
+
+services:
+  nginx:
+    image: nginx:1.19.5
+    ports:
+      - mode: host
+        target: 80
+        published: 80
+        protocol: tcp
+    networks:
+      - project_mynetwork
+    volumes:
+      - /home/ubuntu/nginx.conf:/etc/nginx/nginx.conf
+      - myvolume_static:/data/static/
+      - myvolume_media:/data/media/
+      - myvolume_log:/var/log/nginx/
+    secrets:
+      - NGINX_AUTH
+
+  goaccess:
+    image: allinurl/goaccess:1.5.1
+    ports:
+      - 7890:7890
+    volumes:
+      - myvolume_log:/var/log/nginx/
+    command: /var/log/nginx/my_access.log -o /var/log/nginx/report.html --real-time-html --log-format COMBINED
+
+  project_mycontainer:
+    image: myimageproject:2
+    networks:
+      - project_mynetwork
+    volumes:
+      - myvolume_static:/home/git_class_2/staticfiles
+      - myvolume_media:/home/git_class_2/media/
+    secrets:
+      - MYSECRET_KEY
+      - MARIADB_USER
+      - MARIADB_PASSWORD
+
+  mariadb:
+    image: mariadb:10.5
+    networks:
+      - project_mynetwork
+    volumes:
+      - myvolume_mariadb:/var/lib/mysql
+    secrets:
+      - MARIADB_ROOT_PASSWORD
+      - MARIADB_USER
+      - MARIADB_PASSWORD
+
+    environment:
+      MARIADB_ROOT_PASSWORD_FILE: /run/secrets/MARIADB_ROOT_PASSWORD
+      MARIADB_DATABASE: django
+      MARIADB_USER_FILE: /run/secrets/MARIADB_USER
+      MARIADB_PASSWORD_FILE: /run/secrets/MARIADB_PASSWORD
+
+networks:
+  project_mynetwork:
+
+volumes:
+  myvolume_static:
+  myvolume_media:
+  myvolume_mariadb:
+  myvolume_log:
+
+secrets:
+  MYSECRET_KEY:
+    external: true
+  MARIADB_ROOT_PASSWORD:
+    external: true
+  MARIADB_USER:
+    external: true
+  MARIADB_PASSWORD:
+    external: true
+  NGINX_AUTH:
+    external: true
+
